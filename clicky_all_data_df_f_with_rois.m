@@ -58,14 +58,14 @@ for ii = 1:size(roi_points_in,2)
     ax1 = subplot(1,3,2:3); % plot the trace
     hold on;
     
-    %for tt=1:size(a_data,1)
-    %    plot(t, itrace(tt,:),'Color', currcolor_single, 'LineWidth', 0.5);
-    %end
+    for tt=1:size(a_data,1)
+        plot(t, itrace(tt,:),'Color', currcolor_single, 'LineWidth', 0.5);
+    end
     
     plot(t, itrace_avg,'Color', currcolor_avg, 'LineWidth', 2.5);
     
     xlim([0 max(t)]);
-    ylim([-0.25 0.8]);
+    ylim([-0.25 1.4]);
     xlabel('Time (s)', 'FontSize', 14, 'FontWeight', 'bold');
     %ylabel('Flourescence (au)', 'FontSize', 14, 'FontWeight', 'bold');
     set(gca, 'FontSize', 14 );

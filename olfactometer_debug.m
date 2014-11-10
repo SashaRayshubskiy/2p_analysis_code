@@ -1,15 +1,17 @@
 %% 
-clear all;
+clear data avg_data;
 close all;
 %basepath = '/Users/sasha/Documents/Wilson lab/Data/2p_olfactometer_test_2014_11_05/';
-%basepath = 'C:\Users\WilsonLab\Desktop\Sasha\2p_olfactometer_test_2014_11_07\';
-basepath = '/Users/sasha/Documents/Wilson lab/Data/2p_olfactometer_test_2014_11_07/';
+basepath = 'C:\Users\WilsonLab\Desktop\Sasha\2p_olfactometer_test_2014_11_09\';
+%basepath = '/Users/sasha/Documents/Wilson lab/Data/2p_olfactometer_test_2014_11_07/';
 cd(basepath)
 
-trial_types = { 'both_odor', 'left_odor', 'right_odor', 'both_air', 'left_air', 'right_air' };
+%trial_types = { 'both_odor', 'left_odor', 'right_odor', 'both_air', 'left_air', 'right_air' };
+trial_types = { 'both_odor_12', 'left_odor_12', 'right_odor_12', 'both_air_12', 'left_air_12', 'right_air_12' };
+%trial_types = { 'left_air_7' };
 FR = 7.8;
 TPRE = 5;
-STIM = 10;
+STIM = 10.0;
 
 for tt = 1:size(trial_types,2)
     
@@ -39,7 +41,14 @@ right_roi = rois{2};
 tt = 1;
 clicky_all_data_df_f_with_rois( squeeze(data(tt,:,:,:,:)), FR, TPRE, STIM, [basepath '/'], trial_types{tt}, rois );
 
+%%
+STIM = 10.0;
+data(1,2,:,:,:) = data(1,1,:,:,:);
+%clicky_all_data_df_f(squeeze(data(1,:,:,:,:)), FR, TPRE, STIM, [basepath '/' trial_types{tt}]);
+clicky_all_data_df_f_with_rois( squeeze(data(1,:,:,:,:)), FR, TPRE, STIM, [basepath '/'], trial_types{tt}, rois );
+
 %% 
+STIM = 10.0;
 clear intens_air intens_odor;
 f = figure;
 for tt=1:3
