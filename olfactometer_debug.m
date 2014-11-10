@@ -35,6 +35,10 @@ rois = get_rois(squeeze(data(1,:,:,:,:)));
 left_roi  = rois{1};
 right_roi = rois{2};
 
+%%
+tt = 1;
+clicky_all_data_df_f_with_rois( squeeze(data(tt,:,:,:,:)), FR, TPRE, STIM, [basepath '/'], trial_types{tt}, rois );
+
 %% 
 clear intens_air intens_odor;
 f = figure;
