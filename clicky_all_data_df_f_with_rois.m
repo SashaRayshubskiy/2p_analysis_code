@@ -65,7 +65,7 @@ for ii = 1:size(roi_points_in,2)
     plot(t, itrace_avg,'Color', currcolor_avg, 'LineWidth', 2.5);
     
     xlim([0 max(t)]);
-    ylim([-0.25 1.4]);
+    ylim([-0.25 2.4]);
     xlabel('Time (s)', 'FontSize', 14, 'FontWeight', 'bold');
     %ylabel('Flourescence (au)', 'FontSize', 14, 'FontWeight', 'bold');
     set(gca, 'FontSize', 14 );

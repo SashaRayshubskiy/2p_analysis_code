@@ -6,7 +6,7 @@ basepath = 'C:\Users\WilsonLab\Desktop\Sasha\2p_olfactometer_test_2014_11_12\';
 %basepath = '/Users/sasha/Documents/Wilson lab/Data/2p_olfactometer_test_2014_11_07/';
 cd(basepath)
 
-NUM = 3;
+NUM = 4;
 num_str = [ num2str( NUM ) '_'];
 % trial_types = { 'both_odor', 'left_odor', 'right_odor', 'both_air', 'left_air', 'right_air' };
 trial_types = { ['both_odor_' num_str], ['left_odor_' num_str], ['right_odor_' num_str], ['both_air_' num_str], ['left_air_' num_str], ['right_air_' num_str] };
@@ -57,18 +57,21 @@ STIM = 10.0;
 clear intens_air intens_odor;
 f = figure;
 
-SPACING = 0.1;
+SPACING = 0.01;
 PADDING = 0;
 MARGIN = 0.05;
 
 f2 = figure;
 f3 = figure;
 
+cnt = 2;
+cnt_str = [ '_' num2str(cnt) ];
+
 for tt=1:3
     tt_air = tt+3;
-    intens_odor = clicky_all_data_df_f_with_rois( squeeze(data(tt,:,:,:,:)), FR, TPRE, STIM, [basepath '/'], trial_types{tt}, rois );
+    intens_odor = clicky_all_data_df_f_with_rois( squeeze(data(tt,:,:,:,:)), FR, TPRE, STIM, [basepath '/'], [trial_types{tt} cnt_str], rois );
     close(gcf());
-    intens_air = clicky_all_data_df_f_with_rois( squeeze(data(tt_air,:,:,:,:)), FR, TPRE, STIM, [basepath '/'], trial_types{tt_air}, rois );
+    intens_air = clicky_all_data_df_f_with_rois( squeeze(data(tt_air,:,:,:,:)), FR, TPRE, STIM, [basepath '/'], [trial_types{tt_air} cnt_str], rois );
     close(gcf());
     
     figure(f);
@@ -108,28 +111,26 @@ for tt=1:3
         DATA = squeeze(mean(squeeze(data(tt,:,:,:,:))));
         rho = corr(squeeze(intens_odor(:,side)), reshape(DATA(:,:,BEGIN_TC:END_TC), [size(DATA,1)*size(DATA,2) size(DATA(:,:,BEGIN_TC:END_TC),3) ])' );
         corr_img = reshape(rho', [size(DATA,1),  size(DATA,2)]);
-        imagesc( corr_img ); axis image; colorbar;
+        imagesc( corr_img ); axis image; axis off; colorbar;
         title(['Corr image ' side_str{side} ' side: ' trial_types{tt}])
         
         subaxis(2,3,tt_air, 'Spacing', SPACING, 'Padding', PADDING, 'Margin', MARGIN);
         DATA = squeeze(mean(squeeze(data(tt_air,:,:,:,:))));
         rho = corr(squeeze(intens_air(:,side)), reshape(DATA(:,:,BEGIN_TC:END_TC), [size(DATA,1)*size(DATA,2) size(DATA(:,:,BEGIN_TC:END_TC),3) ])' );
         corr_img = reshape(rho', [size(DATA,1),  size(DATA,2)]);
-        imagesc( corr_img ); axis image; colorbar;
+        imagesc( corr_img ); axis image; axis off;  colorbar;
         title(['Corr image ' side_str{side} ' side: ' trial_types{tt_air}])
     end
 end
 
-saveas(f2,[basepath '/corr_img_' side_str{1} '.fig']);
-saveas(f2,[basepath '/corr_img_' side_str{1} '.png']);
-saveas(f3,[basepath '/corr_img_' side_str{2} '.fig']);
-saveas(f3,[basepath '/corr_img_' side_str{2} '.png']);
-saveas(f,[basepath '/odor_air_diff.fig']);
+saveas(f2,[basepath '/corr_img_' num_str side_str{1} cnt_str '.fig']);
+saveas(f2,[basepath '/corr_img_' num_str side_str{1} cnt_str '.png']);
+saveas(f3,[basepath '/corr_img_' num_str side_str{2} cnt_str '.fig']);
+saveas(f3,[basepath '/corr_img_' num_str side_str{2} cnt_str '.png']);
+saveas(f,[basepath '/odor_air_diff' cnt_str '.fig']);
 
 %% Corr image
 DATA = avg_data{1};
-
-
 
 f2 = figure;
 rho = corr(squeeze(intens(:,1)), reshape(DATA(:,:,BEGIN_TC:END_TC), [size(DATA,1)*size(DATA,2) size(DATA(:,:,BEGIN_TC:END_TC),3) ])' );
