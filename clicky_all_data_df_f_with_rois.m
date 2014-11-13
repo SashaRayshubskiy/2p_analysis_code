@@ -73,7 +73,7 @@ for ii = 1:size(roi_points_in,2)
     
     colorindex = colorindex+1;
     
-    intens = [intens; itrace_avg_raw'];
+    intens = [intens; itrace_avg'];
     nroi = nroi + 1;
 end
  

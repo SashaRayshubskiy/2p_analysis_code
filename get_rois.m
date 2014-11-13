@@ -1,12 +1,18 @@
-function [roi_points] = get_rois(a_data);
+function [roi_points] = get_rois(a_data, img);
 
 avg_data = squeeze(mean(a_data,1));
-refimg = mean(avg_data, 3);
+
+if( nargin == 2 )
+    refimg = img;
+else
+    refimg = mean(avg_data, 3);
+end
+
 
 f = figure;
 subplot(1,3,1)
 imshow(refimg, [], 'InitialMagnification', 'fit')
-caxis([0 1600]); 
+%caxis([0 1600]); 
 
 hold on;
 
