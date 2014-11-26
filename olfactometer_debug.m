@@ -2,11 +2,11 @@
 clear data avg_data;
 close all;
 %basepath = '/Users/sasha/Documents/Wilson lab/Data/2p_olfactometer_test_2014_11_05/';
-basepath = 'C:\Users\WilsonLab\Desktop\Sasha\2p_olfactometer_test_2014_11_13\';
+basepath = 'C:\Users\WilsonLab\Desktop\Sasha\2p_olfactometer_test_2014_11_23\';
 %basepath = '/Users/sasha/Documents/Wilson lab/Data/2p_olfactometer_test_2014_11_07/';
 cd(basepath)
 
-NUM = 5;
+NUM = 3;
 num_str = [ num2str( NUM ) '_'];
 % trial_types = { 'both_odor', 'left_odor', 'right_odor', 'both_air', 'left_air', 'right_air' };
 trial_types = { ['both_odor_' num_str], ['left_odor_' num_str], ['right_odor_' num_str], ['both_air_' num_str], ['left_air_' num_str], ['right_air_' num_str] };
@@ -48,6 +48,7 @@ clicky_all_data_df_f_with_rois( squeeze(data(tt,:,:,:,:)), FR, TPRE, STIM, [base
 %%
 STIM = 10.0;
 cur_num = 3;
+tt = 1;
 %data(1,2,:,:,:) = data(1,1,:,:,:);
 %clicky_all_data_df_f(squeeze(data(1,:,:,:,:)), FR, TPRE, STIM, [basepath '/' trial_types{tt}]);
 intens = clicky_all_data_df_f_with_rois( squeeze(data(1,:,:,:,:)), FR, TPRE, STIM, [basepath '/'], [trial_types{tt} '_' num2str(cur_num)], rois );
@@ -64,7 +65,7 @@ MARGIN = 0.05;
 f2 = figure;
 f3 = figure;
 
-cnt = 4;
+cnt = 1;
 cnt_str = [ '_' num2str(cnt) ];
 
 for tt=1:3
@@ -113,6 +114,7 @@ for tt=1:3
         corr_img = reshape(rho', [size(DATA,1),  size(DATA,2)]);
         imagesc( corr_img ); axis image; axis off; colorbar;
         title(['Corr image ' side_str{side} ' side: ' trial_types{tt}])
+        caxis([-0.7 0.7]);
         
         subaxis(2,3,tt_air, 'Spacing', SPACING, 'Padding', PADDING, 'Margin', MARGIN);
         DATA = squeeze(mean(squeeze(data(tt_air,:,:,:,:))));
@@ -120,6 +122,7 @@ for tt=1:3
         corr_img = reshape(rho', [size(DATA,1),  size(DATA,2)]);
         imagesc( corr_img ); axis image; axis off;  colorbar;
         title(['Corr image ' side_str{side} ' side: ' trial_types{tt_air}])
+        caxis([-0.7 0.7]);
     end
 end
 

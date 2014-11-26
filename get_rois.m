@@ -12,7 +12,10 @@ end
 f = figure;
 subplot(1,3,1)
 imshow(refimg, [], 'InitialMagnification', 'fit')
-%caxis([0 1600]); 
+
+if( nargin ~= 2 )
+    caxis([0 1600]);    
+end
 
 hold on;
 
