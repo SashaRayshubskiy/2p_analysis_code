@@ -1,4 +1,4 @@
-function [intens] = clicky_all_data_df_f_with_rois(a_data, FR, TPRE, STIM, basepath, title_str, roi_points_in);
+function [intens, ax1] = clicky_all_data_df_f_with_rois(a_data, FR, TPRE, STIM, basepath, title_str, roi_points_in);
 
 fname = [basepath title_str];
 
