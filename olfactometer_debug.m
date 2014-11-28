@@ -2,14 +2,14 @@
 clear data avg_data;
 close all;
 %basepath = '/Users/sasha/Documents/Wilson lab/Data/2p_olfactometer_test_2014_11_05/';
-basepath = 'C:\Users\WilsonLab\Desktop\Sasha\2p_olfactometer_test_2014_11_23\';
+basepath = 'C:\Users\WilsonLab\Desktop\Sasha\2p_olfactometer_test_2014_11_27\';
 %basepath = '/Users/sasha/Documents/Wilson lab/Data/2p_olfactometer_test_2014_11_07/';
 cd(basepath)
 
-NUM = 3;
+NUM = 30;
 num_str = [ num2str( NUM ) '_'];
 % trial_types = { 'both_odor', 'left_odor', 'right_odor', 'both_air', 'left_air', 'right_air' };
-trial_types = { ['both_odor_' num_str], ['left_odor_' num_str], ['right_odor_' num_str], ['both_air_' num_str], ['left_air_' num_str], ['right_air_' num_str] };
+trial_types = { ['Both_Odor_' num_str], ['Left_Odor_' num_str], ['Right_Odor_' num_str], ['Both_Air_' num_str], ['Left_Air_' num_str], ['Right_Air_' num_str] };
 % trial_types = { 'wide_field_3_' };
          
 FR = 7.8;
@@ -45,7 +45,7 @@ rois = get_rois(squeeze(data(1,:,:,:,:)));
 
 %% Get ROIs in corr image
 % Get df/f in ROIs
-cur_num = 1;
+cur_num = NUM;
 tt = 1;
 %data(1,2,:,:,:) = data(1,1,:,:,:);
 %clicky_all_data_df_f(squeeze(data(1,:,:,:,:)), FR, TPRE, STIM, [basepath '/' trial_types{tt}]);
@@ -89,7 +89,7 @@ MARGIN1 = 0.05;
 f2 = figure;
 f3 = figure;
 
-cnt = 1;
+cnt = 0;
 cnt_str = [ '_' num2str(cnt) ];
 
 for tt=1:3
@@ -151,8 +151,8 @@ saveas(f2,[basepath '/corr_img_' num_str side_str{1} cnt_str '.fig']);
 saveas(f2,[basepath '/corr_img_' num_str side_str{1} cnt_str '.png']);
 saveas(f3,[basepath '/corr_img_' num_str side_str{2} cnt_str '.fig']);
 saveas(f3,[basepath '/corr_img_' num_str side_str{2} cnt_str '.png']);
-saveas(f,[basepath '/odor_vs_air_ts_' cnt_str '.fig']);
-saveas(f,[basepath '/odor_vs_air_ts_' cnt_str '.png']);
+saveas(f,[basepath '/odor_vs_air_ts_' num_str cnt_str '.fig']);
+saveas(f,[basepath '/odor_vs_air_ts_' num_str cnt_str '.png']);
 
 %%
 tt = 1;

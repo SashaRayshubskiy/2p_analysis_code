@@ -14,7 +14,7 @@ subplot(1,3,1)
 imshow(refimg, [], 'InitialMagnification', 'fit')
 
 if( nargin ~= 2 )
-    caxis([0 1600]);    
+    caxis([0 1000]);    
 end
 
 hold on;
