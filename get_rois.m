@@ -10,11 +10,11 @@ end
 
 
 f = figure;
-subplot(1,3,1)
+%subplot(1,3,1)
 imshow(refimg, [], 'InitialMagnification', 'fit')
 
 if( nargin ~= 2 )
-    caxis([0 1000]);    
+    caxis([0 3500]);    
 end
 
 hold on;
