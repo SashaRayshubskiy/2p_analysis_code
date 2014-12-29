@@ -40,6 +40,75 @@ while 1
     state.files.baseName = data;
     updateGUIByGlobal('state.files.baseName');
     
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Place the Hubel-Weisel needle to an appropriate initial position
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    if (~isfield(state,'sasha'))
+        state.sasha.first = 1;
+    end
+    
+    if (~isfield(state.sasha, 'hw_dev_x'))
+        [dev_x, dev_y, dev_z] = getAPTDevices();
+        state.sasha.hw_dev_x = dev_x;
+    end
+    
+    if (~isfield(state,'sasha.hw_frame_cnt'))
+        state.sasha.hw_frame_cnt = 1;
+        state.sasha.hw_prev_trial_type = '';
+        state.sasha.HW_JOG_MOVE_DIST = 2.0; % mm
+        state.sasha.hw_dev_x.SetJogStepSize( 1, state.sasha.HW_JOG_MOVE_DIST );
+        
+        state.sasha.HW_JOG_MOVE_MIN_VEL = 0.0;
+        state.sasha.HW_JOG_MOVE_ACCEL = 1.5;
+        state.sasha.HW_STIM_PERIOD = 10.0; % sec
+        
+        state.sasha.HW_JOG_MOVE_MAX_VEL = state.sasha.HW_JOG_MOVE_DIST / state.sasha.HW_STIM_PERIOD;        
+        
+        state.sasha.hw_dev_x.SetJogVelParams( 1, ... 
+                                             state.sasha.HW_JOG_MOVE_MIN_VEL, ...
+                                             state.sasha.HW_JOG_MOVE_ACCEL, ...
+                                             state.sasha.HW_JOG_MOVE_MAX_VEL );
+    end
+    
+    cur_trial_type = state.files.baseName;
+           
+    if(length(strmatch('Right', cur_trial_type) ==  1))
+        state.sasha.hw_direction = 1;
+    elseif(length(strmatch('Left', cur_trial_type) ==  1))
+        state.sasha.hw_direction = 2;
+    end
+    
+%     if(strcmp(cur_trial_type, state.sasha.hw_prev_trial_type) == 1)
+%         % Need to move the needle back       
+%         % state.sasha.hw_dev_x.SetRelMoveDist(0, -1.0*state.sasha.HW_REL_MOVE_DIST*cur_hw_direction ); 
+%         % state.sasha.hw_dev_x.MoveRelative(0, 1); %  Wait for trial to finish
+%         
+%         revdir = -1;
+%         if (state.sasha.hw_direction == 1 )
+%             revdir = 2;
+%         elseif (state.sasha.hw_direction == 2 )
+%             revdir = 1;            
+%         end
+% 
+%         % Speed up the move
+%         state.sasha.hw_dev_x.SetJogVelParams( 1, ... 
+%                                              state.sasha.HW_JOG_MOVE_MIN_VEL, ...
+%                                              state.sasha.HW_JOG_MOVE_ACCEL, ...
+%                                              3.5 );
+% 
+%         state.sasha.hw_dev_x.MoveJog(1, revdir);
+%         disp('revdir MoveJog finished');
+% 
+%         % Revert to the original velocity
+%         state.sasha.hw_dev_x.SetJogVelParams( 1, ... 
+%                                              state.sasha.HW_JOG_MOVE_MIN_VEL, ...
+%                                              state.sasha.HW_JOG_MOVE_ACCEL, ...
+%                                              state.sasha.HW_JOG_MOVE_MAX_VEL );
+%     end
+        
+    state.sasha.hw_prev_trial_type = cur_trial_type;
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
+    
     % call grab;
     % set(gh.mainControls.grabOneButton, 'String', 'GRAB');
     figure(gh.mainControls.figure1);

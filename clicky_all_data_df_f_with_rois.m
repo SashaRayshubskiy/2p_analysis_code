@@ -1,4 +1,4 @@
-function [intens, ax1] = clicky_all_data_df_f_with_rois(a_data, FR, TPRE, STIM, basepath, title_str, roi_points_in);
+function [intens, ax1] = clicky_all_data_df_f_with_rois(a_data, FR, TPRE, STIM, TPRE_FLUSH, FLUSH, basepath, title_str, roi_points_in);
 
 fname = [basepath title_str];
 
@@ -66,6 +66,7 @@ for ii = 1:size(roi_points_in,2)
     
     xlim([0 max(t)]);
     ylim([-0.25 1.4]);
+    %ylim([-0.65 1.4]);
     xlabel('Time (s)', 'FontSize', 14, 'FontWeight', 'bold');
     %ylabel('Flourescence (au)', 'FontSize', 14, 'FontWeight', 'bold');
     set(gca, 'FontSize', 14 );
@@ -84,6 +85,11 @@ y_min = yy(1); y_max = yy(2);
 hh = fill([ TPRE TPRE TPRE+STIM TPRE+STIM ],[y_min y_max y_max y_min ], rgb('Wheat'));
 set(gca,'children',circshift(get(gca,'children'),-1));
 set(hh, 'EdgeColor', 'None');
+
+hh = fill([ TPRE_FLUSH TPRE_FLUSH TPRE_FLUSH+FLUSH TPRE_FLUSH+FLUSH ],[y_min y_max y_max y_min ], rgb('Wheat'));
+set(gca,'children',circshift(get(gca,'children'),-1));
+set(hh, 'EdgeColor', 'None');
+
 intens = intens';
 title([title_str ': avg of ' num2str(size(a_data,1)) ' trials'], 'Interpreter','none');
 

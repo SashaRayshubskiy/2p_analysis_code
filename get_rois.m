@@ -14,7 +14,7 @@ f = figure;
 imshow(refimg, [], 'InitialMagnification', 'fit')
 
 if( nargin ~= 2 )
-    caxis([0 3500]);    
+    caxis([0 1050]);    
 end
 
 hold on;
